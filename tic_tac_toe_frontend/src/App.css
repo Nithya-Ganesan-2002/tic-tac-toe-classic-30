@@ -1,104 +1,203 @@
-/* CSS Variables for Theme Management */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  --ttt-primary: #3498db;
+  --ttt-secondary: #2ecc71;
+  --ttt-accent: #e74c3c;
+  --ttt-board-bg: #fff;
+  --ttt-border: #e9ecef;
+  --ttt-score: #2d3436;
+  --ttt-light: #f8fafc;
 }
 
-[data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
+body {
+  background: var(--ttt-light);
 }
 
-.App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+/* Outer centered container */
+.ttt-outer {
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  background: var(--ttt-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
+/* Main app container */
+.ttt-container {
+  background: var(--ttt-board-bg);
+  padding: 2.7rem 2.2rem 2.1rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 24px 0 rgba(52,152,219,0.03), 0 1.5px 8px 0 rgba(46,204,113,0.06);
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-width: 330px;
+  max-width: 95vw;
+}
+
+.ttt-title {
+  color: var(--ttt-primary);
+  margin: 0 0 10px;
+  font-size: 2.4rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-align: center;
+}
+.ttt-controls-row {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  margin-bottom: 0.3rem;
+}
+
+.ttt-mode select.ttt-select {
+  background: var(--ttt-light);
+  border: 1.5px solid var(--ttt-border);
+  color: var(--ttt-primary);
+  font-size: 1rem;
+  border-radius: 0.55em;
+  padding: 0.35em 1.1em 0.35em 0.6em;
+  margin-bottom: 0.2em;
+  outline: none;
+  font-family: inherit;
+  font-weight: 500;
+  transition: border 0.2s;
+}
+.ttt-mode select.ttt-select:focus {
+  border: 1.5px solid var(--ttt-primary);
+}
+
+.ttt-scorebar {
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 1.15rem;
+  color: var(--ttt-score);
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-bottom: 0.15rem;
+}
+.ttt-score-x {
+  color: var(--ttt-primary);
+}
+.ttt-score-o {
+  color: var(--ttt-secondary);
+}
+
+.ttt-status {
+  font-size: 1.18rem;
+  font-weight: 600;
+  min-height: 2.2em;
+  margin: 6px 0 14px 0;
+  letter-spacing: 0.4px;
+  transition: color 0.2s;
+}
+
+/* Grid board */
+.ttt-board {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 0.14em;
+  background: var(--ttt-border);
+  border-radius: 1.1rem;
+  margin-bottom: 18px;
+  width: 260px;
+  height: 260px;
+  box-shadow: 0 2px 12px 0 rgba(52,152,219,0.09);
+}
+.ttt-board-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.14em;
+}
+.ttt-square {
+  width: 84px;
+  height: 84px;
+  font-size: 2.13rem;
+  color: #222;
+  background: var(--ttt-board-bg);
+  border: 2px solid var(--ttt-border);
+  border-radius: 0.76em;
+  outline: none;
+  cursor: pointer;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
-  position: relative;
+  transition: background 0.19s, color 0.19s, border 0.19s;
+  margin: 0;
+  box-shadow: 0 1px 2px 0 rgba(30, 100, 180, 0.03);
+}
+.ttt-square:active {
+  background: var(--ttt-light);
+}
+.ttt-square.win {
+  background: var(--ttt-secondary);
+  color: #fff;
+  border: 2px solid var(--ttt-accent);
+  animation: win-glow 0.7s alternate 2;
+}
+@keyframes win-glow {
+  0% { box-shadow: 0 0 0 0 var(--ttt-accent); }
+  100% { box-shadow: 0 0 12px 4px var(--ttt-accent); }
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+/* Bottom controls/buttons */
+.ttt-bottom-row {
+  margin-top: 13px;
+  margin-bottom: 13px;
+  display: flex;
+  flex-direction: row;
+  gap: 0.95rem;
 }
-
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
+.ttt-btn {
+  background: var(--ttt-primary);
+  color: #fff;
   border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
+  border-radius: 0.5em;
+  padding: 0.47em 1.4em;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3.5px 0 rgba(52,152,219,0.13);
+  transition: background 0.15s, box-shadow 0.15s;
+}
+.ttt-btn:hover {
+  background: var(--ttt-secondary);
+  color: #fff;
+}
+.ttt-btn:active {
+  background: var(--ttt-accent);
+}
+.ttt-btn-reset {
+  background: var(--ttt-accent);
+  color: #fff;
+}
+.ttt-btn-reset:hover {
+  background: #fff;
+  color: var(--ttt-accent);
+  border: 1.5px solid var(--ttt-accent);
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+.ttt-footer {
+  text-align: center;
+  font-size: 0.95rem;
+  margin-top: 0.7rem;
+  color: #bbb;
 }
 
-.theme-toggle:active {
-  transform: translateY(0);
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Responsive */
+@media (max-width: 600px) {
+  .ttt-board {
+    width: 180px;
+    height: 180px;
   }
-  to {
-    transform: rotate(360deg);
+  .ttt-square {
+    width: 56px;
+    height: 56px;
+    font-size: 1.3rem;
   }
-}
-
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+  .ttt-container {
+    padding: 1.2rem 0.3rem 1rem;
+    min-width: 1px;
   }
 }
